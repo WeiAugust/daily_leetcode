@@ -1,5 +1,6 @@
 package group.rookie;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
@@ -23,27 +24,26 @@ public class ZigzagLevelOrder {
         if (root == null) {
             return ans;
         }
-        Deque<TreeNode> qDeque = new LinkedList<>();
-        qDeque.add(root);
-        ans.add(Arrays.asList(root.val));
+        Deque<TreeNode> qDeque = new ArrayDeque<>();
+        qDeque.offer(root);
 
-        boolean isLeftToRight = false;
-        while (qDeque.size() > 0) {
+        boolean isLeftToRight = true;
+        while (!qDeque.isEmpty()) {
             int size = qDeque.size();
-            List<Integer> levelAns = new LinkedList<>();
+            Deque<Integer> levelAns = new LinkedList<>();
             while (size > 0) {
-                TreeNode node = qDeque.pop();
-                levelAns.add(node.val);
+                TreeNode node = qDeque.poll();
                 if (isLeftToRight) {
-                    if (node.left != null) qDeque.addFirst(node.left);
-                    if (node.right != null) qDeque.addFirst(node.right);
+                    levelAns.offerLast(node.val);
                 } else {
-                    if (node.right != null) qDeque.addFirst(node.right);
-                    if (node.left != null) qDeque.addFirst(node.left);
+                    levelAns.offerFirst(node.val);
                 }
+                if (node.left != null) qDeque.addLast(node.left);
+                if (node.right != null) qDeque.addLast(node.right);
                 size--;
             }
-            ans.add(levelAns);
+            isLeftToRight = !isLeftToRight;
+            ans.add(new LinkedList<>(levelAns));
         }
         return ans;
     }
