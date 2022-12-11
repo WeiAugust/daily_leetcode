@@ -15,8 +15,9 @@ import group.rookie.common.TreeNode;
  * 树中节点数目在范围 [0, 2000] 内
  * -100 <= Node.val <= 100
  * 思路：首先需要有个标志位表示从左往右还是从右往左，用双端队列存储每层的节点
- * 从左往右-从队头弹出元素，先遍历左子树，再遍历右子树放入队头
- * 从右往左-从队头弹出元素，先遍历右子树，再遍历左子树放入队头
+ * 从左往右-从队头弹出元素，放入level队列尾部
+ * 从右往左-从队头弹出元素，放入level队列首部
+ * 将节点左子节点放入global队列尾部，将节点右子节点放入global队列尾部
  */
 public class ZigzagLevelOrder {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
