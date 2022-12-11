@@ -22,16 +22,17 @@ public class ThreeSum {
             if (i > 0 && nums[i] == nums[i - 1]) {
                 continue;
             }
-            int numA = nums[i];
             int k = n - 1;
             for (int j = i + 1; j < n; j++) {
+                //去重
                 if (j > i + 1 && nums[j] == nums[j - 1]) {
                     continue;
                 }
+                //从最后开始遍历，如果三个数和大于0则左移k
                 while (j < k && nums[j] + nums[k] + nums[i] > 0) {
                     --k;
                 }
-
+                //此轮遍历不存在符合要求的结果，跳出
                 if (j == k) {
                     break;
                 }
